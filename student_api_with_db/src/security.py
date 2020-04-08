@@ -1,6 +1,6 @@
 from werkzeug.security import safe_str_cmp
 
-from user_dao import UserDao
+from Dao.user_dao import UserDao
 
 """
 1. when it go to end point /auth

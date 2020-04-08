@@ -1,6 +1,6 @@
 import sqlite3
 
-from student import Student
+from Entity.student import Student
 
 
 class StudentDao:
@@ -9,7 +9,7 @@ class StudentDao:
         connection = sqlite3.connect("data.db")
         query = "SELECT * FROM student"
         result = connection.execute(query)
-        students = [Student(*row) for row in result]
+        students = [Student(*row).__dict__ for row in result]
         connection.close()
         return students
 
@@ -17,28 +17,28 @@ class StudentDao:
     def find_by_name(cls, name):
         connection = sqlite3.connect("data.db")
         query = "SELECT * FROM student WHERE name = ?"
-        result = connection.execute(query, name)
+        result = connection.execute(query, (name,))
         row = result.fetchone()
         if row:
-            student = Student(*row)
+            student = Student(*row).__dict__
         else:
             student = None
         connection.close()
         return student
 
     @classmethod
-    def add(cls, user):
+    def add(cls, student):
         connection = sqlite3.connect("data.db")
         query = "INSERT INTO student VALUES (?,?,?)"
-        connection.execute(query, (user.name, user.sex, user.age))
+        connection.execute(query, (student.name, student.sex, student.age))
         connection.commit()
         connection.close()
 
     @classmethod
-    def update(cls, user):
+    def update(cls, student):
         connection = sqlite3.connect("data.db")
         query = "UPDATE student SET sex = ?, age = ? WHERE name = ?"
-        connection.execute(query, user.sex, user.sge, user.name)
+        connection.execute(query, (student.sex, student.age, student.name))
         connection.commit()
         connection.close()
 
@@ -46,7 +46,7 @@ class StudentDao:
     def delete(cls,name):
         connection = sqlite3.connect("data.db")
         query = "DELETE FROM student WHERE name = ?"
-        connection.execute(query, name)
+        connection.execute(query, (name,))
         connection.commit()
         connection.close()
 

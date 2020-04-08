@@ -1,6 +1,6 @@
 import sqlite3
 
-from user import User
+from Entity.user import User
 
 
 class UserDao:

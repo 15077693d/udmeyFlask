@@ -1,10 +1,10 @@
 from flask_restful import Resource
 
-from user_dao import UserDao
+from Dao.student_dao import StudentDao
 
 
 class StudentsResource(Resource):
     # read all student
     def get(self):
-        UserDao.find_all()
-        return "students"
+        students = StudentDao.find_all()
+        return students

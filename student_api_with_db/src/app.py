@@ -2,9 +2,9 @@ from flask import Flask
 from flask_jwt import JWT
 from flask_restful import Api
 
-from student_resource import StudentResource
-from students_resource import StudentsResource
-from user_resource import UserResource
+from Resource.student_resource import StudentResource
+from Resource.students_resource import StudentsResource
+from Resource.user_resource import UserResource
 
 """
  JWT, flask_restful, reqparse
@@ -29,6 +29,6 @@ jwt = JWT(app, authenticate, identity)
 # 400 -> bad request
 api.add_resource(StudentResource, "/student/<string:name>")
 api.add_resource(StudentsResource, "/students")
-api.add_resource(UserResource, "/user")
+api.add_resource(UserResource, "/user/<string:username>")
 
 app.run(debug=True)
